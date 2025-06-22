@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-AI-Based Autonomous Vehicle - Main Application
-Main entry point for the autonomous vehicle system
-"""
 
 import sys
 import time
@@ -11,7 +7,6 @@ import argparse
 from pathlib import Path
 from typing import Optional, Tuple
 
-# Add project root to path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
@@ -21,30 +16,25 @@ from config.settings import HardwareConfig
 
 
 class AutonomousVehicle:
-    """Main autonomous vehicle application"""
     
     def __init__(self):
         self.controller = VehicleController()
         self.running = False
         
-        # Setup signal handlers for graceful shutdown
         signal.signal(signal.SIGINT, self._signal_handler)
         signal.signal(signal.SIGTERM, self._signal_handler)
         
         logger.info("Autonomous vehicle application initialized")
     
     def _signal_handler(self, signum, frame):
-        """Handle shutdown signals"""
         logger.info(f"Received signal {signum}, shutting down...")
         self.shutdown()
         sys.exit(0)
     
     def initialize(self) -> bool:
-        """Initialize the autonomous vehicle system"""
         logger.info("Initializing autonomous vehicle system...")
         
         try:
-            # Initialize vehicle controller
             if not self.controller.initialize():
                 logger.error("Failed to initialize vehicle controller")
                 return False
@@ -57,7 +47,6 @@ class AutonomousVehicle:
             return False
     
     def run(self, goal: Optional[Tuple[float, float]] = None, test_mode: bool = False):
-        """Run the autonomous vehicle system"""
         if not self.initialize():
             logger.error("Failed to initialize system")
             return False
@@ -66,23 +55,18 @@ class AutonomousVehicle:
         logger.info("Starting autonomous vehicle operation...")
         
         try:
-            # Set goal if provided
             if goal:
                 self.controller.set_goal(goal)
                 logger.info(f"Navigation goal set: {goal}")
             
-            # Start autonomous operation
             if not self.controller.start_autonomous_operation():
                 logger.error("Failed to start autonomous operation")
                 return False
             
-            # Main application loop
             while self.running:
                 try:
-                    # Get current status
                     status = self.controller.get_status()
                     
-                    # Log status periodically
                     if status.state != VehicleState.IDLE:
                         logger.log_system_status({
                             "state": status.state.value,
@@ -92,17 +76,15 @@ class AutonomousVehicle:
                             "system_health": status.system_health
                         })
                     
-                    # Check for completion in test mode
                     if test_mode and status.state == VehicleState.IDLE:
                         logger.info("Test completed")
                         break
                     
-                    # Check for errors
                     if status.state == VehicleState.ERROR:
                         logger.error("System entered error state")
                         break
                     
-                    time.sleep(1)  # Status update interval
+                    time.sleep(1)
                     
                 except KeyboardInterrupt:
                     logger.info("User interrupted operation")
@@ -121,12 +103,10 @@ class AutonomousVehicle:
         return True
     
     def shutdown(self):
-        """Shutdown the autonomous vehicle system"""
         logger.info("Shutting down autonomous vehicle system...")
         
         self.running = False
         
-        # Shutdown vehicle controller
         if self.controller:
             self.controller.shutdown()
         
@@ -134,17 +114,15 @@ class AutonomousVehicle:
 
 
 def run_demo():
-    """Run a demonstration of the autonomous vehicle system"""
     logger.info("Starting autonomous vehicle demonstration...")
     
     vehicle = AutonomousVehicle()
     
-    # Demo goals (in cm)
     demo_goals = [
-        (100, 0),    # Move forward 1m
-        (100, 100),  # Move diagonally
-        (0, 100),    # Move left
-        (0, 0)       # Return to start
+        (100, 0),
+        (100, 100),
+        (0, 100),
+        (0, 0)
     ]
     
     for i, goal in enumerate(demo_goals):
@@ -154,38 +132,33 @@ def run_demo():
             logger.error(f"Demo step {i+1} failed")
             break
         
-        time.sleep(2)  # Pause between goals
+        time.sleep(2)
     
     logger.info("Demonstration completed")
 
 
 def run_test():
-    """Run system tests"""
     logger.info("Running system tests...")
     
     vehicle = AutonomousVehicle()
     
-    # Test initialization
     logger.info("Testing system initialization...")
     if not vehicle.initialize():
         logger.error("Initialization test failed")
         return False
     
-    # Test object detection
     logger.info("Testing object detection...")
     detector = vehicle.controller.object_detector
     if not detector.is_loaded:
         logger.error("Object detection test failed")
         return False
     
-    # Test path planning
     logger.info("Testing path planning...")
     planner = vehicle.controller.path_planner
     if planner.grid is None:
         logger.error("Path planning test failed")
         return False
     
-    # Test Arduino communication
     logger.info("Testing Arduino communication...")
     arduino = vehicle.controller.arduino_comm
     if not arduino.is_connected:
@@ -197,7 +170,6 @@ def run_test():
 
 
 def main():
-    """Main application entry point"""
     parser = argparse.ArgumentParser(description="AI-Based Autonomous Vehicle")
     parser.add_argument("--demo", action="store_true", help="Run demonstration")
     parser.add_argument("--test", action="store_true", help="Run system tests")
@@ -210,7 +182,6 @@ def main():
     
     args = parser.parse_args()
     
-    # Update configuration based on arguments
     if args.port:
         HardwareConfig.ARDUINO_PORT = args.port
     if args.camera is not None:
@@ -223,16 +194,13 @@ def main():
     
     try:
         if args.test:
-            # Run system tests
             success = run_test()
             sys.exit(0 if success else 1)
         
         elif args.demo:
-            # Run demonstration
             run_demo()
         
         else:
-            # Run normal operation
             vehicle = AutonomousVehicle()
             
             goal: Optional[Tuple[float, float]] = None

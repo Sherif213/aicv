@@ -1,15 +1,7 @@
 # AI-Based Autonomous Vehicle for Commercial Use
 
-## 🎓 Graduation Project
 
-**Project Title**: AI-Based Autonomous Vehicles for Commercial Use  
-**Institution**: [Your University]  
-**Department**: [Your Department]  
-**Supervisor**: [Your Supervisor]  
-**Student**: [Your Name]  
-**Year**: 2024
 
----
 
 ## 🚗 Project Overview
 
@@ -118,7 +110,6 @@ Comprehensive overview of objectives, methodology, and results.
 
 ### 🔧 [Hardware Documentation](hardware/)
 - [Circuit Schematics](hardware/schematics/)
-- [Bill of Materials](hardware/bom/)
 
 ---
 
@@ -217,45 +208,3 @@ python main.py --test
 - Contributes to open-source autonomous vehicle community
 - Advances understanding of real-time AI systems
 
----
-
-## 🤝 Contributing
-
-This is an academic project, but contributions and feedback are welcome:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
----
-
-## 📄 License
-
-This project is developed for academic purposes as a graduation project.
-
----
-
-## 🙏 Acknowledgments
-
-- **YOLO**: Real-time object detection by Joseph Redmon
-- **Ultralytics**: YOLOv8 implementation
-- **OpenCV**: Computer vision library
-- **PyTorch**: Deep learning framework
-- **Arduino**: Hardware control platform
-
----
-
-## 📞 Contact
-
-**Student**: [Your Name]  
-**Email**: [your.email@university.edu]  
-**Supervisor**: [Supervisor Name]  
-**Department**: [Your Department]  
-**Institution**: [Your University]
-
----
-
-*For detailed documentation and setup instructions, see the [docs/](docs/) directory.*
-
-**🎓 This project represents a comprehensive implementation of AI-based autonomous vehicle technology for academic research and commercial applications.** 

@@ -48,8 +48,8 @@ The AI-Based Autonomous Vehicle system is a complete self-driving car prototype 
 
 #### Arduino Setup
 - **Arduino Uno** or **Arduino Nano**
-- **3x HC-SR04 Ultrasonic Sensors**
-- **2x DC Motors** (12V, 100RPM recommended)
+- **6x HC-SR04 Ultrasonic Sensors**
+- **4x DC Motors** (12V, 100RPM recommended)
 - **2x L298N Motor Drivers**
 - **1x SG90 Servo Motor** (for steering)
 - **Breadboard** and connecting wires
@@ -60,8 +60,6 @@ The AI-Based Autonomous Vehicle system is a complete self-driving car prototype 
 - **MPU6050** IMU sensor
 - **NEO-6M** GPS module
 - **LCD Display** for status monitoring
-
-### Wiring Diagram
 
 #### Arduino Pin Connections
 
@@ -294,8 +292,7 @@ The system supports these control modes:
 ls /dev/ttyUSB*
 ls /dev/ttyACM*
 
-# Update port in config/settings.py
-# Try different baud rates if needed
+
 ```
 
 #### 2. Camera Not Working
@@ -348,13 +345,10 @@ sudo reboot
 
 **Solutions**:
 ```bash
-# Check system resources
+
 htop
 free -h
 
-# Reduce model complexity
-# Edit config/settings.py to use smaller YOLO model
-# Increase GRID_SIZE for faster path planning
 ```
 
 ### Debug Mode
@@ -384,134 +378,5 @@ python scripts/test_system.py
 python -c "from core.arduino_communication import ArduinoCommunication; a = ArduinoCommunication(); print(a.connect())"
 ```
 
-## Safety Guidelines
-
-### Pre-Operation Checklist
-
-1. **Hardware Inspection**
-   - Check all wire connections
-   - Verify motor direction
-   - Test emergency stop functionality
-   - Ensure sensors are clean and unobstructed
-
-2. **Environment Assessment**
-   - Clear area of obstacles
-   - Ensure adequate lighting
-   - Check for moving objects
-   - Verify flat, stable surface
-
-3. **System Validation**
-   - Run system tests
-   - Check sensor readings
-   - Verify object detection
-   - Test path planning
-
-### Emergency Procedures
-
-1. **Immediate Stop**
-   - Press Ctrl+C to stop the system
-   - Use emergency stop button if available
-   - Disconnect power if necessary
-
-2. **System Malfunction**
-   - Stop all movement immediately
-   - Check error logs
-   - Restart system if needed
-   - Contact support if issues persist
-
-### Safety Features
-
-The system includes these safety mechanisms:
-
-- **Emergency Stop**: Automatic activation when obstacles detected too close
-- **Speed Limiting**: Configurable maximum speeds
-- **Obstacle Avoidance**: Automatic path adjustment
-- **System Health Monitoring**: Continuous component status checking
-- **Error Recovery**: Automatic error handling and recovery
-
-## Maintenance
-
-### Regular Maintenance
-
-1. **Hardware Maintenance**
-   - Clean sensors weekly
-   - Check wire connections monthly
-   - Lubricate motors as needed
-   - Inspect wheels and chassis
-
-2. **Software Maintenance**
-   - Update dependencies monthly
-   - Check for system updates
-   - Backup configuration files
-   - Clean log files periodically
-
-3. **Calibration**
-   - Calibrate camera distance estimation
-   - Adjust ultrasonic sensor readings
-   - Fine-tune control parameters
-   - Update path planning settings
-
-### Performance Optimization
-
-1. **System Tuning**
-   ```bash
-   # Monitor system performance
-   python -c "from core.vehicle_controller import VehicleController; v = VehicleController(); print(v.get_performance_metrics())"
-   ```
-
-2. **Model Optimization**
-   - Use smaller YOLO models for faster inference
-   - Adjust confidence thresholds
-   - Optimize path planning grid size
-
-3. **Hardware Upgrades**
-   - Consider faster Raspberry Pi model
-   - Upgrade to better camera
-   - Add more sensors for redundancy
-
-### Backup and Recovery
-
-1. **Configuration Backup**
-   ```bash
-   # Backup configuration
-   cp -r config/ backup/config_$(date +%Y%m%d)/
-   ```
-
-2. **System Recovery**
-   ```bash
-   # Restore from backup
-   cp -r backup/config_YYYYMMDD/* config/
-   ```
-
-3. **Log Management**
-   ```bash
-   # Archive old logs
-   tar -czf logs_$(date +%Y%m%d).tar.gz logs/
-   rm logs/*.log
-   ```
-
-## Support and Resources
-
-### Documentation
-- **README.md**: Project overview and quick start
-- **API Documentation**: Code documentation
-- **Troubleshooting Guide**: Common issues and solutions
-
-### Community Support
-- **GitHub Issues**: Report bugs and request features
-- **Discussion Forum**: Community discussions
-- **Wiki**: Additional documentation and tutorials
-
-### Contact Information
-- **Email**: [Your Email]
-- **GitHub**: [Your GitHub Profile]
-- **Project Repository**: [Repository URL]
 
 ---
-
-**Important Notes**:
-- This system is for educational and research purposes
-- Always test in a safe, controlled environment
-- Follow local regulations for autonomous vehicles
-- Keep system updated with latest security patches
-- Maintain proper documentation of modifications 
