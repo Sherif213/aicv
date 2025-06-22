@@ -7,8 +7,6 @@
 4. [Configuration](#configuration)
 5. [Operation](#operation)
 6. [Troubleshooting](#troubleshooting)
-7. [Safety Guidelines](#safety-guidelines)
-8. [Maintenance](#maintenance)
 
 ## System Overview
 
